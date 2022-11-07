@@ -3,15 +3,15 @@
 #include <queue>
 using namespace std;
 
-using node_type  = pair<int, int>;  // weight, vertex
-using graph_type = vector<vector<node_type>>;
-using pq_type    = priority_queue<node_type, vector<node_type>, greater<node_type>>;
+using NODE  = pair<int, int>;        // weight, adjacent vertex
+using GRAPH = vector<vector<NODE>>;  // adjacency list
+using PQ    = priority_queue<NODE, vector<NODE>, greater<NODE>>;
 
-vector<int> Dijkstra(const graph_type& graph, int source) {  
+vector<int> Dijkstra(const GRAPH& graph, int source) {  
     vector<int> distance(graph.size(), -1);
     distance[source] = 0;
 
-    pq_type pq;
+    PQ pq;
     pq.emplace(0, source);
 
     while (!pq.empty()) {
