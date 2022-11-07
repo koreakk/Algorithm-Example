@@ -7,14 +7,14 @@ using namespace std;
     Time Complexity  : O(ElogV)
 */
 
-using node_type  = pair<int, int>;  // weight, vertex
-using graph_type = vector<vector<node_type>>;
-using pq_type    = priority_queue<node_type, vector<node_type>, greater<node_type>>;
+using NODE  = pair<int, int>;        // weight, adjacent vertex
+using GRAPH = vector<vector<NODE>>;  // adjacency list
+using PQ    = priority_queue<NODE, vector<NODE>, greater<NODE>>;
 
-int Prim(const graph_type& graph) {
+int Prim(const GRAPH& graph) {
     vector<bool> visited(graph.size());
 
-    pq_type pq;
+    PQ pq;
     pq.emplace(0, 1);
 
     int answer = 0;
