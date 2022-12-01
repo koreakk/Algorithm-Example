@@ -1,10 +1,10 @@
 #include <utility>
 #include <vector>
 using namespace std;
-using ll = long long;
 
-ll pow(ll base, ll exp, ll mod) {
-    ll ret = 1;
+template<class T>
+T pow(T base, T exp, T mod) {
+    T ret = 1;
     for (base %= mod; exp; exp >>= 1) {
         if (exp & 1) {
             ret *= base;
@@ -16,8 +16,9 @@ ll pow(ll base, ll exp, ll mod) {
     return ret;
 }
 
-ll factorial(ll n, ll mod) {
-    ll ret = 1;
+template<class T>
+T factorial(T n, T mod) {
+    T ret = 1;
     for (int i = 1; i <= n; ++i) {
         ret *= i % mod;
         ret %= mod;
@@ -31,25 +32,27 @@ ll factorial(ll n, ll mod) {
 
     Time Complexity  : O(n + logm)
 */
-ll BinomialCoefficient(ll n, ll r, ll mod) {
-    ll nF  = factorial(n, mod);
-    ll rF  = factorial(r, mod);
-    ll nrF = factorial(n - r, mod);
+template<class T>
+T BinomialCoefficient(T n, T r, T mod) {
+    T nF  = factorial(n, mod);
+    T rF  = factorial(r, mod);
+    T nrF = factorial(n - r, mod);
 
-    return (nF * pow(rF * nrF, mod - 2ll, mod)) % mod;
+    return (nF * pow(rF * nrF, mod - 2T, mod)) % mod;
 }
 
-pair<vector<ll>, vector<ll>> BinomialCoefficientCompute(ll n, ll mod) {
-    vector<ll> fac(n + 1ll), inv(n + 1ll);
+template<class T>
+pair<vector<T>, vector<T>> BinomialCoefficientCompute(T n, T mod) {
+    vector<T> fac(n + 1T), inv(n + 1T);
 
     fac[0] = 1;
-    for (ll i = 1; i <= n; ++i) {
+    for (T i = 1; i <= n; ++i) {
         fac[i] = i * fac[i - 1];
         fac[i] %= mod;
     }
 
-    inv[n] = pow(fac[n], mod - 2ll, mod);
-    for (ll i = n - 1; i >= 0; --i) {
+    inv[n] = pow(fac[n], mod - 2T, mod);
+    for (T i = n - 1; i >= 0; --i) {
         inv[i] = (i + 1) * inv[i + 1];
         inv[i] %= mod;
     }
@@ -57,6 +60,7 @@ pair<vector<ll>, vector<ll>> BinomialCoefficientCompute(ll n, ll mod) {
     return { fac, inv };
 }
 
-ll BinomialCoefficientComputed(const vector<ll>& fac, const vector<ll>& inv, ll n, ll r, ll mod) {
+template<class T>
+T BinomialCoefficientComputed(const vector<T>& fac, const vector<T>& inv, T n, T r, T mod) {
     return ((fac[n] * inv[r]) % mod) * inv[n - r] % mod;
 }

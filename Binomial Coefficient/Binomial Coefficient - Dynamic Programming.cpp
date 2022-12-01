@@ -1,6 +1,5 @@
 #include <vector>
 using namespace std;
-using ll = long long;
 
 /*
     nCr % m = ((n-1)C(r-1) % m + (n-1)Cr % m) % m
@@ -9,13 +8,14 @@ using ll = long long;
     Time Complexity  : O(n^2)
     Space Complexity : O(n^2)
 */
-ll BinomialCoefficient(ll n, ll r, ll mod) {
-    vector<vector<ll>> dp(n + 1, vector<ll>(n + 1));
+template<class T>
+T BinomialCoefficient(T n, T r, T mod) {
+    vector<vector<T>> dp(n + 1, vector<T>(n + 1));
 
-    for (ll i = 0; i <= n; ++i) {
+    for (T i = 0; i <= n; ++i) {
         dp[i][0] = 1;
 
-        for (ll j = 1; j <= i; ++j) {
+        for (T j = 1; j <= i; ++j) {
             dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
             dp[i][j] %= mod;
         }
@@ -24,13 +24,14 @@ ll BinomialCoefficient(ll n, ll r, ll mod) {
     return dp[n][r];
 }
 
-vector<vector<ll>> BinomialCoefficientCompute(ll n, ll mod) {
-    vector<vector<ll>> dp(n + 1, vector<ll>(n + 1));
+template<class T>
+vector<vector<T>> BinomialCoefficientCompute(T n, T mod) {
+    vector<vector<T>> dp(n + 1, vector<T>(n + 1));
 
-    for (ll i = 0; i <= n; ++i) {
+    for (T i = 0; i <= n; ++i) {
         dp[i][0] = 1;
 
-        for (ll j = 1; j <= i; ++j) {
+        for (T j = 1; j <= i; ++j) {
             dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
             dp[i][j] %= mod;
         }
@@ -39,6 +40,7 @@ vector<vector<ll>> BinomialCoefficientCompute(ll n, ll mod) {
     return dp;
 }
 
-ll BinomialCoefficientComputed(ll n, ll r, const vector<vector<ll>>& dp) {
+template<class T>
+T BinomialCoefficientComputed(T n, T r, const vector<vector<T>>& dp) {
     return dp[n][r];
 }
