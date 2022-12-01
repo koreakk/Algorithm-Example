@@ -1,28 +1,29 @@
 #include <vector>
 using namespace std;
 
-vector<int> LIS(const vector<int>& A) {
-    int N = (int)A.size();
-    vector<int> dp(N, 1);
+template<class T>
+vector<T> LIS(const vector<T>& A) {
+    size_t N = A.size();
+    vector<T> dp(N, 1);
 
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < i; ++j) {
+    for (size_t i = 0; i < N; ++i) {
+        for (size_t j = 0; j < i; ++j) {
             if (A[i] > A[j] && dp[i] < dp[j] + 1) {
                 dp[i] = dp[j] + 1;
             }
         }
     }
 
-    int i = 0;
-    for (int j = 0; j < N; ++j) {
+    size_t i = 0;
+    for (size_t j = 0; j < N; ++j) {
         if (i < dp[j]) {
             i = dp[j];
         }
     }
 
-    vector<int> ret(i);
+    vector<T> ret(i);
 
-    for (int j = N - 1; j >= 0; --j) {
+    for (size_t j = N - 1; j >= 0; --j) {
         if (dp[j] == i) {
             ret[--i] = A[j];
         }

@@ -1,11 +1,12 @@
 #include <vector>
 using namespace std;
 
-int LIS(const vector<int>& A) {
-    vector<int> L = { A[0] };
+template<class T>
+T LIS(const vector<T>& A) {
+    vector<T> L = { A[0] };
     L.reserve(A.size());
 
-    for (int x : A) {
+    for (T x : A) {
         if (L.back() < x) {
             L.push_back(x);
         }
@@ -14,5 +15,5 @@ int LIS(const vector<int>& A) {
         }
     }
 
-    return static_cast<int>(L.size());
+    return static_cast<T>(L.size());
 }

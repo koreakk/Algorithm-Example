@@ -2,30 +2,31 @@
 #include <algorithm>
 using namespace std;
 
-vector<int> LIS(const vector<int>& A) {
-    int N = (int)A.size();
+template<class T>
+vector<T> LIS(const vector<T>& A) {
+    size_t N = A.size();
 
-    vector<int> info(N);
+    vector<T> info(N);
 
-    vector<int> L = { A[0] };
+    vector<T> L = { A[0] };
     L.reserve(A.size());
 
-    for (int i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i) {
         if (L.back() < A[i]) {
             L.push_back(A[i]);
-            info[i] = (int)L.size();
+            info[i] = (T)L.size();
         }
         else {
             auto it = lower_bound(L.begin(), L.end(), A[i]);
             *it     = A[i];
-            info[i] = (int)(it - L.begin() + 1);
+            info[i] = (T)(it - L.begin() + 1);
         }
     }
 
-    int retSize = (int)L.size();
-    vector<int> ret(retSize);
+    size_t retSize = L.size();
+    vector<T> ret(retSize);
 
-    int i = retSize, j = N - 1;
+    size_t i = retSize, j = N - 1;
     for (; j >= 0; --j) {
         if (info[j] == i) {
             ret[--i] = A[j];
