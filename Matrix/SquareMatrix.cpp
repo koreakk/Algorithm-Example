@@ -39,9 +39,7 @@ public:
 
         SquareMatrix result(matSize);
         for (int i = 0; i < matSize; ++i) {
-            for (int j = 0; j < matSize; ++j) {
-                result.mat[i][j] = (i == j) ? 1 : 0;
-            }
+            result.mat[i][i] = 1;
         }
 
         SquareMatrix base = *this;
