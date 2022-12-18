@@ -16,7 +16,7 @@ int ccw(const Point& p1, const Point& p2, const Point& p3) {
     return (d > 0) ? 1 : (d < 0) ? -1 : 0;
 }
 
-bool LineIntersection(const Line& Al, const Line& Bl) {
+bool lineSegmentIntersection(const Line& Al, const Line& Bl) {
     Point s1 = Al.s, e1 = Al.e;
     Point s2 = Bl.s, e2 = Bl.e;
 
