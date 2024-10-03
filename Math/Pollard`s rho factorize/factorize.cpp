@@ -71,6 +71,7 @@ bool is_prime(ull n) {
     return true;
 }
 
+/* O(N^0.25) */
 ull pollard_rho(ull n) {
     if (n == 1) {
         return 1;

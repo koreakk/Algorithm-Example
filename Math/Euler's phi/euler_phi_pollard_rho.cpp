@@ -45,7 +45,6 @@ bool miller_rabin_primality_test(ull n, ull a) {
     return false;
 }
 
-/* O(logN) */
 bool is_prime(ull n) {
     if (n < 10) {
         for (ull p : {2, 3, 5, 7}) {
@@ -70,4 +69,47 @@ bool is_prime(ull n) {
     }
 
     return true;
+}
+
+ull pollard_rho(ull n) {
+    if (n == 1) {
+        return 1;
+    }
+
+    if (!(n&1)) {
+        return 2;
+    }
+
+    if (is_prime(n)) {
+        return n;
+    }
+
+    ull x, y, c, d;
+    auto f = [&c, &n](ull x) { return (mod_mul(x, x, n) + c) % n; };
+
+    x = y = rand() % (n - 2) + 2;
+    c = rand() % 20 + 1;
+    d = 1;
+
+    while (d == 1) {
+        x = f(x);
+        y = f(f(y));
+        d = gcd(max(x, y) - min(x, y), n);
+    }
+
+    return pollard_rho(d);
+}
+
+/* O(N^0.25) */
+ull phi(ull n) {
+    ull ret = n;
+    while (n != 1) {
+        ull p = pollard_rho(n);
+        ret -= ret / p;
+
+        while (n % p == 0) {
+            n /= p;
+        }
+    }
+    return ret;
 }
