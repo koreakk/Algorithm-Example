@@ -2,14 +2,18 @@
 using namespace std;
 using ull = unsigned long long;
 
-ull powmod(ull n, ull r, ull m) {
+ull mod_mul(ull a, ull b, ull mod) {
+    return (__int128)a * b % mod;
+}
+
+ull mod_pow(ull base, ull exp, ull mod) {
     ull ret = 1;
-    while (r) {
-        if (r & 1) {
-            ret = (ret * n) % m;
+    while (exp) {
+        if (exp & 1) {
+            ret = mod_mul(ret, base, mod);
         }
-        n = (n * n) % m;
-        r >>= 1;
+        base = mod_mul(base, base, mod);
+        exp >>= 1;
     }
     return ret;
 }
@@ -22,18 +26,18 @@ bool miller_rabin_primality_test(ull n, ull a) {
         d >>= 1;
         ++r;
     }
-    
-    ull x = powmod(a, d, n);
+
+    ull x = mod_pow(a, d, n);
     if (x == 1 || x == n-1) {
         return true;
     }
 
     while (--r) {
-        x = powmod(x, 2, n);
+        x = mod_mul(x, x, n);
         if (x == 1) {
             return false;
         }
-        if (x == n - 1) {
+        if (x == n-1) {
             return true;
         }
     }
@@ -55,13 +59,14 @@ bool is_prime(ull n) {
         return false;
     }
 
-    for (ull a : {2, 7, 61}) {  // n < 2^64  {2, 3, 5, 7, 11, 13, 17, 23, 29, 31}
-        if (n == a) { 
-            return true; 
+    for (ull a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+        if (n == a) {
+            return true;
         }
         if (!miller_rabin_primality_test(n, a)) {
             return false;
         }
     }
+
     return true;
 }
